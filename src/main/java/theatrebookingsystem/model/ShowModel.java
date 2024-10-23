@@ -1,15 +1,17 @@
 package theatrebookingsystem.model;
 
+import java.time.LocalDate;
+
 public class ShowModel {
     private String title;
     private double runningTime;
-    private int startDate;
-    private int endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double ticketPrice;
 
 
 
-    public ShowModel(String title, double runningTime, int startDate, int endDate, double ticketPrice){
+    public ShowModel(String title, double runningTime, LocalDate startDate, LocalDate endDate, double ticketPrice){
         this.title = title;
         this.runningTime = runningTime;
         this.startDate = startDate;
@@ -34,20 +36,27 @@ public class ShowModel {
         }
     }
 
-    public int getStartDate(){
+    public LocalDate getStartDate(){
         return startDate;
     }
-    public void setStartDate(int startDate){
-        if (startDate>=1 && startDate<=31){
+    public void setStartDate(LocalDate startDate) {
+        if (endDate.isAfter(startDate)) {
             this.startDate = startDate;
         }
+        else{
+            throw new IllegalArgumentException("start date should be before end date!");
+        }
     }
-    public int getEndDate(){
+
+    public LocalDate getEndDate(){
         return endDate;
     }
-    public void setEndDate(int endDate){
-        if (endDate>=1 && endDate<=31){
+    public void setEndDate(LocalDate endDate){
+        if (startDate.isBefore(endDate)) {
             this.endDate = endDate;
+        }
+        else{
+            throw new IllegalArgumentException("end date should be after start date");
         }
     }
 

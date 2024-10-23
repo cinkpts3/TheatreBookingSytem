@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -13,6 +14,7 @@ import utils.CustomList;
 import theatrebookingsystem.model.ShowModel;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class ShowController {
     private Stage stage;
@@ -26,15 +28,17 @@ public class ShowController {
     @FXML
     private TextField runningTimeField;
     @FXML
-    private TextField startDateField;
+    private DatePicker startDateField;
     @FXML
-    private TextField endDateField;
+    private DatePicker endDateField;
     @FXML
     private TextField ticketPriceField;
 
     @FXML
     private Button addButton;
 
+    @FXML
+    private Button deleteButton;
     // Custom list to store ShowModel objects
     private CustomList<ShowModel> showsList = new CustomList<>();
 
@@ -42,8 +46,8 @@ public class ShowController {
     public void addShowList(ActionEvent event){
         String title = titleField.getText();
         double runningTime = Double.parseDouble(runningTimeField.getText());
-        int startDate = Integer.parseInt(startDateField.getText());
-        int endDate = Integer.parseInt(endDateField.getText());
+        LocalDate startDate =  startDateField.getValue();
+        LocalDate endDate = endDateField.getValue();
         double ticketPrice = Double.parseDouble(ticketPriceField.getText());
 
         ShowModel newShow = new ShowModel(title, runningTime, startDate, endDate, ticketPrice);
@@ -57,13 +61,22 @@ public class ShowController {
         // Clear the input fields after adding the show
         titleField.clear();
         runningTimeField.clear();
-        startDateField.clear();
-        endDateField.clear();
+        endDateField.setValue(null);
+        startDateField.setValue(null);
         ticketPriceField.clear();
 
     }
 
+    public void deleteShow(ActionEvent e){
+        int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
 
+        if (selectedIndex != 1){
+            showsList.remove(selectedIndex); //remove from the lsit
+            showListView.getItems().remove(selectedIndex);
+
+        }
+    }
+    //switch
     public void switchToMainView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainview.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
