@@ -54,7 +54,7 @@ public class CustomList<D>{ //<D> is used for generic type of data
 
         public void show(){
             Node<D> node = head;
-            while (node.next!=null){
+            while (node !=null){
                 System.out.println(node.data);
                 node = node.next;
             }
@@ -75,4 +75,13 @@ public class CustomList<D>{ //<D> is used for generic type of data
     }
 
 
+    public int size(){
+            int count = 0;
+            Node<D> current = head; //starting from the start of the list
+            while (current != null){ //while not empty
+                count++;
+                current = current.next;
+            }
+            return count;
+    }
 }

@@ -1,0 +1,12 @@
+<Shows>
+    <Show>
+        <Title>Example Show</Title>
+        <RunningTime>120</RunningTime>
+        <StartDate>2024-11-01</StartDate>
+        <EndDate>2024-11-10</EndDate>
+        <StallsTicketPrice>25.00</StallsTicketPrice>
+        <CircleTicketPrice>30.00</CircleTicketPrice>
+        <BalconyTicketPrice>35.00</BalconyTicketPrice>
+    </Show>
+
+</Shows>
