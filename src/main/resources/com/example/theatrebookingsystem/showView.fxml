@@ -20,7 +20,7 @@
       <Button layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMainView" prefHeight="26.0" prefWidth="127.0" text="MAIN" />
       <Button layoutX="127.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToShowView" prefHeight="26.0" prefWidth="120.0" text="SHOW" />
       <Button layoutX="247.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToPerfomanceView" prefHeight="26.0" prefWidth="120.0" text="PERFOMANCE" />
-      <Button layoutX="367.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMainView" prefHeight="26.0" prefWidth="120.0" text="BOOKING" />
+      <Button layoutX="367.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToBookingView" prefHeight="26.0" prefWidth="120.0" text="BOOKING" />
       <Button layoutX="487.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToCustomerView" prefHeight="26.0" prefWidth="127.0" text="USER" />
       <TextField fx:id="titleField" layoutX="14.0" layoutY="95.0" prefHeight="26.0" prefWidth="62.0" promptText="title" />
       <TextField fx:id="runningTimeField" layoutX="87.0" layoutY="95.0" prefHeight="26.0" prefWidth="62.0" promptText="running time" />

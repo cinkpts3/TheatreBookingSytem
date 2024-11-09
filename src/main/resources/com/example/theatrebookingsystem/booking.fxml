@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.theatrebookingsystem.Booking"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theatrebookingsystem.BookingController">
+   <children>
+      <AnchorPane layoutX="-2.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMainView" prefHeight="26.0" prefWidth="127.0" text="MAIN" />
+            <Button layoutX="127.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToShowView" prefHeight="26.0" prefWidth="120.0" text="SHOW" />
+            <Button layoutX="247.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToPerfomanceView" prefHeight="26.0" prefWidth="120.0" text="PERFOMANCE" />
+            <Button layoutX="367.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToBookingView" prefHeight="26.0" prefWidth="120.0" text="BOOKING" />
+            <Button layoutX="487.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToCustomerView" prefHeight="26.0" prefWidth="127.0" text="USER" />
+            <ListView fx:id="customerListView" layoutY="111.0" prefHeight="242.0" prefWidth="614.0" />
+            <Label layoutX="14.0" layoutY="39.0" text="BOOKING">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="23.0" />
+               </font>
+            </Label>
+            <Button fx:id="addBooking" layoutX="575.0" layoutY="76.0" mnemonicParsing="false" onAction="#addBookingList" text="+" />
+            <Button fx:id="deleteBooking" layoutX="536.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteBookingList" text="REMOVE" />
+            <ChoiceBox layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
+            <ChoiceBox layoutX="119.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
+            <Button fx:id="seatPage" layoutX="334.0" layoutY="75.0" mnemonicParsing="false" onAction="#switchToSeatsView" prefHeight="26.0" prefWidth="105.0" text="FIND SEATS" />
+            <Text fill="#636161" layoutX="465.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seats chosen" wrappingWidth="94.13677978515625" />
+            <ChoiceBox layoutX="224.0" layoutY="75.0" prefHeight="26.0" prefWidth="82.0" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

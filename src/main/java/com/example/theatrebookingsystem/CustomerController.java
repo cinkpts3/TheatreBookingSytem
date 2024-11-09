@@ -43,7 +43,7 @@ public class CustomerController {
     public void addCustomerList(ActionEvent event){
         String name = nameField.getText();
         String email = emailField.getText();
-        int phone = Integer.parseInt(phoneNumberField.getText());
+        String phone = phoneNumberField.getText();
 
         CustomerModel newCustomer = new CustomerModel(name, email, phone);
 
@@ -95,6 +95,13 @@ public class CustomerController {
 
     public void switchToCustomerView(ActionEvent event ) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("customerView.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchToBookingView(ActionEvent event ) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("booking.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

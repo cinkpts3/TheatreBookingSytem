@@ -12,7 +12,7 @@
             <Button layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMainView" prefHeight="26.0" prefWidth="120.0" text="MAIN" />
             <Button layoutX="120.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToShowView" prefHeight="26.0" prefWidth="120.0" text="SHOW" />
             <Button layoutX="240.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToPerfomanceView" prefHeight="26.0" prefWidth="120.0" text="PERFOMANCE" />
-            <Button layoutX="360.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMainView" prefHeight="26.0" prefWidth="120.0" text="BOOKING" />
+            <Button layoutX="360.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToBookingView" prefHeight="26.0" prefWidth="120.0" text="BOOKING" />
             <Button layoutX="480.0" layoutY="1.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToCustomerView" prefHeight="26.0" prefWidth="120.0" text="USER" />
             <Label layoutX="8.0" layoutY="83.0" text="WELCOME TO THE THEATRE BOOKING SYSTEM!">
                <font>

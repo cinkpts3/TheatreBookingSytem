@@ -8,4 +8,5 @@ module com.example.theatrebookingsystem {
     opens com.example.theatrebookingsystem to javafx.fxml;
     exports com.example.theatrebookingsystem;
     requires xstream;
+    opens utils to xstream;
 }

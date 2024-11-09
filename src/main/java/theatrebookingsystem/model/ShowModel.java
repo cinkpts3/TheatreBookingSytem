@@ -15,8 +15,8 @@ public class ShowModel {
 
     public ShowModel(String title, double runningTime, LocalDate startDate, LocalDate endDate, double stallsTicketPrice, double circleTicketPrice, double balconyTicketPrice ){
         this.title = title;
-        this.runningTime = runningTime;
-        this.startDate = startDate;
+        setRunningTime(runningTime);
+        setStartDate(startDate);
         setEndDate(endDate);
         this.stallsTicketPrice = stallsTicketPrice;
         this.circleTicketPrice = circleTicketPrice;
@@ -27,9 +27,7 @@ public class ShowModel {
     public String getTitle(){
         return title;
     }
-    public void setTtile(String title){
-        this.title = title;
-    }
+
 
     public double getRunningTime(){
         return runningTime;
@@ -44,58 +42,48 @@ public class ShowModel {
         return startDate;
     }
     public void setStartDate(LocalDate startDate) {
-        if (endDate.isAfter(startDate)) {
-            this.startDate = startDate;
+        if (endDate != null && endDate.isBefore(startDate)) {
+            throw new IllegalArgumentException("Start date should be before end date!");
         }
-        else{
-            throw new IllegalArgumentException("start date should be before end date!");
-        }
+        this.startDate = startDate;
     }
 
     public LocalDate getEndDate(){
         return endDate;
     }
     public void setEndDate(LocalDate endDate){
-        if (startDate.isBefore(endDate)) {
-            this.endDate = endDate;
+        if (startDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("End date should be after start date!");
         }
-        else{
-            throw new IllegalArgumentException("end date should be after start date");
-        }
+        this.endDate = endDate;
     }
 
     public double getStallsTicketPrice() {
         return stallsTicketPrice;
     }
 
-    public void setStallsTicketPrice(double stallsTicketPrice) {
-        this.stallsTicketPrice = stallsTicketPrice;
-    }
+
 
     public double getCircleTicketPrice() {
         return circleTicketPrice;
     }
 
-    public void setCircleTicketPrice(double circleTicketPrice) {
-        this.circleTicketPrice = circleTicketPrice;
-    }
+
 
     public double getBalconyTicketPrice() {
         return balconyTicketPrice;
     }
 
-    public void setBalconyTicketPrice(double balconyTicketPrice) {
-        this.balconyTicketPrice = balconyTicketPrice;
-    }
+
     @Override
     public String toString(){
-        return "Title" + title +
-                "; running time: " + runningTime +
-                "; start date: " + startDate +
-                "; end date: " + endDate +
-                "; stalls ticket price: " + stallsTicketPrice +
-                "; circle ticket price: " + circleTicketPrice +
-                "; balcony ticket price: " + balconyTicketPrice;
+        return "TITLE" + title +
+                "; RUNNING TIME: " + runningTime +
+                "; START DATE: " + startDate +
+                "; END DATE: " + endDate +
+                "; STALLS TICKET PRICE: " + stallsTicketPrice +
+                "; CIRCLE TICKET PRICE: " + circleTicketPrice +
+                "; BALCONY TICKET PRICE: " + balconyTicketPrice;
 
     }
 }

@@ -31,37 +31,6 @@ public class ShowController {
     private Scene scene;
     private Parent root;
 
-    private File file;
-    public ShowController() {
-        this.showsList = new CustomList<>(); // Initialize your custom list
-    }
-
-    // This constructor can still be used when necessary, but you won't use it in FXML loading
-    public ShowController(File file) {
-        this.file = file;
-        this.showsList = new CustomList<>();
-    }
-
-    public String fileName(){
-        return file.getName();
-    }
-
-    public void load() throws Exception{
-        XStream xStream = new XStream(new DomDriver());
-        XStream.setupDefaultSecurity(xStream);
-        xStream.allowTypes(new Class[]{ShowModel.class});
-
-        ObjectInputStream in = xStream.createObjectInputStream(new FileReader(fileName()));
-        showsList = (CustomList<ShowModel>) in.readObject();
-        in.close();
-    }
-
-    public void save() throws  Exception{
-        XStream xStream = new XStream(new DomDriver());
-        ObjectOutputStream out = xStream.createObjectOutputStream(new FileWriter("src/main/resources/com/example/theatrebookingsystem/shows.xml"));
-        out.writeObject(showsList);
-        out.close();
-    }
     @FXML
     private ListView<String> showListView; // ListView to display the shows
     @FXML
@@ -87,13 +56,43 @@ public class ShowController {
     // Custom list to store ShowModel objects
     private CustomList<ShowModel> showsList = new CustomList<>();
 
+    private MainController mainController;
+
+    private static final String FILE_NAME = "shows.xml";
+
     @FXML
-    public void initialize(){
-        try {
-            this.file = new File("src/main/resources/com/example/theatrebookingsystem/shows.xml");
-            load();
-        } catch (Exception e){
+    public void initialize() {
+// Загрузите данные из файла при инициализации контроллера
+        loadShowsFromFile();
+        // Обновите ListView
+        updateListView();
+    }
+
+    private void saveShowsToFile() {
+        XStream xstream = new XStream(new DomDriver());
+        try (FileWriter writer = new FileWriter(FILE_NAME)) {
+            xstream.toXML(showsList, writer);
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void loadShowsFromFile() {
+        XStream xstream = new XStream(new DomDriver());
+        File file = new File(FILE_NAME);
+        if (file.exists()) {
+            try (FileReader reader = new FileReader(file)) {
+                showsList = (CustomList<ShowModel>) xstream.fromXML(reader);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    // Method to populate ListView with existing shows
+    private void updateListView() {
+        showListView.getItems().clear(); // Clear existing items
+        for (int i = 0; i < showsList.size(); i++) {
+            showListView.getItems().add(showsList.get(i).toString()); // Populate ListView with shows
         }
     }
 
@@ -123,6 +122,7 @@ public class ShowController {
         circleTicketPriceField.clear();
         balconyTicketPriceField.clear();
 
+        saveShowsToFile();
     }
 
     public void deleteShow(ActionEvent e){
@@ -133,7 +133,15 @@ public class ShowController {
             showListView.getItems().remove(selectedIndex);
 
         }
+        saveShowsToFile();
     }
+
+    public void testSaveShows() {
+        ShowModel testShow = new ShowModel("Test Show", 120, LocalDate.now(), LocalDate.now().plusDays(10), 50, 40, 30);
+        showsList.add(testShow);
+        saveShowsToFile();
+    }
+
     //switch
     public void switchToMainView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainview.fxml"));
@@ -167,6 +175,12 @@ public class ShowController {
         stage.show();
     }
 
-
+    public void switchToBookingView(ActionEvent event ) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("booking.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
 }

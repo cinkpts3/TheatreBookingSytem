@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import theatrebookingsystem.model.ShowModel;
+import utils.CustomList;
 
 public class MainController {
 
@@ -15,6 +17,11 @@ public class MainController {
     private Scene scene;
     private Parent root;
 
+    private CustomList<ShowModel> showsList = new CustomList<>();
+
+    public CustomList<ShowModel> getShowsList() {
+        return showsList;
+    }
     public void switchToMainView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainview.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -24,11 +31,17 @@ public class MainController {
     }
 
     public void switchToShowView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("showView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("showView.fxml"));
+        Parent root = loader.load();
+
+
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
+
     }
     public void switchToPerfomanceView(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("perfomanceView.fxml"));
@@ -39,6 +52,13 @@ public class MainController {
     }
     public void switchToCustomerView(ActionEvent event ) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("customerView.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchToBookingView(ActionEvent event ) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("booking.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

@@ -3,9 +3,9 @@ package theatrebookingsystem.model;
 public class CustomerModel {
     private String name;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public CustomerModel (String name, String email, int phoneNumber){
+    public CustomerModel (String name, String email, String phoneNumber){
         setName(name);
         setEmail(email);
         setPhoneNumber(phoneNumber);
@@ -34,15 +34,16 @@ public class CustomerModel {
             throw new IllegalArgumentException("please enter correct email");
         }
     }
-    public int getPhoneNumber(){
+    public String getPhoneNumber(){
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber){
-        if (phoneNumber < 15 ){
+    public void setPhoneNumber(String phoneNumber){
+        // Add any phone number validation you prefer here
+        if (phoneNumber != null ) {
             this.phoneNumber = phoneNumber;
         } else {
-            throw new IllegalArgumentException("please enter correct phone number");
+            throw new IllegalArgumentException("Please enter a correct phone number");
         }
     }
 

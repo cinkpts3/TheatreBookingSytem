@@ -40,7 +40,7 @@ public class PerfomanceModel {
         }
 
         public String toString(){
-            return "Title: " + show +
+            return "Title: " + show.getTitle() +
                     "; date: " + date +
                     "; matinee time: " + matineeTime +
                     "; evening time: " + eveningTime;
