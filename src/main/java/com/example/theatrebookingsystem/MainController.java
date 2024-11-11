@@ -17,11 +17,6 @@ public class MainController {
     private Scene scene;
     private Parent root;
 
-    private CustomList<ShowModel> showsList = new CustomList<>();
-
-    public CustomList<ShowModel> getShowsList() {
-        return showsList;
-    }
     public void switchToMainView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("mainview.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -58,36 +58,15 @@ public class ShowController {
 
     private MainController mainController;
 
-    private static final String FILE_NAME = "shows.xml";
+
 
     @FXML
     public void initialize() {
-// Загрузите данные из файла при инициализации контроллера
-        loadShowsFromFile();
-        // Обновите ListView
+
         updateListView();
     }
 
-    private void saveShowsToFile() {
-        XStream xstream = new XStream(new DomDriver());
-        try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            xstream.toXML(showsList, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void loadShowsFromFile() {
-        XStream xstream = new XStream(new DomDriver());
-        File file = new File(FILE_NAME);
-        if (file.exists()) {
-            try (FileReader reader = new FileReader(file)) {
-                showsList = (CustomList<ShowModel>) xstream.fromXML(reader);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     // Method to populate ListView with existing shows
     private void updateListView() {
         showListView.getItems().clear(); // Clear existing items
@@ -122,7 +101,6 @@ public class ShowController {
         circleTicketPriceField.clear();
         balconyTicketPriceField.clear();
 
-        saveShowsToFile();
     }
 
     public void deleteShow(ActionEvent e){
@@ -133,14 +111,9 @@ public class ShowController {
             showListView.getItems().remove(selectedIndex);
 
         }
-        saveShowsToFile();
+
     }
 
-    public void testSaveShows() {
-        ShowModel testShow = new ShowModel("Test Show", 120, LocalDate.now(), LocalDate.now().plusDays(10), 50, 40, 30);
-        showsList.add(testShow);
-        saveShowsToFile();
-    }
 
     //switch
     public void switchToMainView(ActionEvent event) throws IOException {

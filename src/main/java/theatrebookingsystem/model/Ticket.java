@@ -6,6 +6,8 @@ public abstract class Ticket {
 
     private double price;
 
+
+
     public Ticket(String seatType, int seatNumber, double price) {
         this.seatType = seatType;
         this.seatNumber = seatNumber;

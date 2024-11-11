@@ -11,7 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import theatrebookingsystem.model.CustomerModel;
+import theatrebookingsystem.model.*;
 import utils.CustomList;
 
 import java.io.IOException;
@@ -21,6 +21,7 @@ public class BookingController {
     private Scene scene;
     private Parent root;
 
+//fxml objects
     @FXML
     private ChoiceBox perfomanceChoice;
     @FXML
@@ -38,7 +39,15 @@ public class BookingController {
     private Text seatsChosenText;
     @FXML
     private ListView<String> BookingListView;
+
+    //regular objects
     private CustomList<CustomerModel> BookingList = new CustomList<>();
+    private CustomList<Seat> selectedSeats;
+    private BookingModel bookingModel;
+
+
+
+
 
     public void addBookingList(){
 
