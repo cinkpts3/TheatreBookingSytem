@@ -1,0 +1,13 @@
+<Shows>
+  <head>
+    <data class="Show">
+      <title>xsv</title>
+      <runningTime>123.0</runningTime>
+      <startDate>2024-11-12</startDate>
+      <endDate>2024-11-27</endDate>
+      <stallsTicketPrice>123.0</stallsTicketPrice>
+      <circleTicketPrice>234.0</circleTicketPrice>
+      <balconyTicketPrice>345.0</balconyTicketPrice>
+    </data>
+  </head>
+</Shows>

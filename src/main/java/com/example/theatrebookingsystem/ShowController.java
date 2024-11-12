@@ -1,28 +1,28 @@
 package com.example.theatrebookingsystem;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import com.thoughtworks.xstream.security.NoTypePermission;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import theatrebookingsystem.model.ShowModel;
 import utils.CustomList;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 //import java.io.FileReader;
 //import java.io.FileWriter;
 //import java.io.ObjectInputStream;
 //import java.io.ObjectOutputStream;
 //import java.io.IOException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 
 public class ShowController {
@@ -56,29 +56,28 @@ public class ShowController {
     // Custom list to store ShowModel objects
     private CustomList<ShowModel> showsList = new CustomList<>();
 
+
     private MainController mainController;
 
-
+    private CustomList<String> titles = new CustomList<>();
 
     @FXML
     public void initialize() {
-
-        updateListView();
+        load();
     }
 
 
-    // Method to populate ListView with existing shows
-    private void updateListView() {
-        showListView.getItems().clear(); // Clear existing items
-        for (int i = 0; i < showsList.size(); i++) {
-            showListView.getItems().add(showsList.get(i).toString()); // Populate ListView with shows
-        }
+
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
-    public void addShowList(ActionEvent event){
+
+    public void addShowList(ActionEvent event) throws Exception {
         String title = titleField.getText();
         double runningTime = Double.parseDouble(runningTimeField.getText());
-        LocalDate startDate =  startDateField.getValue();
+        LocalDate startDate = startDateField.getValue();
         LocalDate endDate = endDateField.getValue();
         double stallsTicketPrice = Double.parseDouble(stallsTicketPriceField.getText());
         double circleTicketPrice = Double.parseDouble(circleTicketPriceField.getText());
@@ -86,11 +85,10 @@ public class ShowController {
 
         ShowModel newShow = new ShowModel(title, runningTime, startDate, endDate, stallsTicketPrice, circleTicketPrice, balconyTicketPrice);
 
-        // Add the new show to the custom list
-        showsList.add(newShow);
 
-        // Optionally, update the ListView to display the added show
+        showsList.add(newShow);
         showListView.getItems().add(newShow.toString());
+        save();
 
         // Clear the input fields after adding the show
         titleField.clear();
@@ -102,6 +100,7 @@ public class ShowController {
         balconyTicketPriceField.clear();
 
     }
+
 
     public void deleteShow(ActionEvent e){
         int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
@@ -115,45 +114,57 @@ public class ShowController {
     }
 
 
-    //switch
-    public void switchToMainView(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("mainview.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+    public String getTitles() {
+        CustomList<String> extractedTitles = new CustomList<>();
+        for (int i = 0; i < showsList.size(); i++) {
+            extractedTitles.add(showsList.get(i).getTitle());
+        }
+        System.out.println("Titles extracted from ShowController: " + extractedTitles.size());
+        return extractedTitles.toString();
+    }
+    public void save() throws Exception {
+        var xstream = new XStream(new DomDriver());
+        xstream.alias("Show", ShowModel.class);
+        xstream.alias("Shows", CustomList.class);
+
+        FileWriter writer = new FileWriter("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\Shows.xml");
+        ObjectOutputStream os = xstream.createObjectOutputStream(writer);
+        os.writeObject(showsList);
+        System.out.println ("shows saved to xml:)");
+        os.close();
+
+
     }
 
-    public void switchToShowView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("showView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+    public void load() {
+        Class<?>[] classes = new Class[] {ShowModel.class, CustomList.class};
+
+        XStream xstream = new XStream(new DomDriver());
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypes(classes);
+
+        xstream.alias("Show", ShowModel.class);
+        xstream.alias("Shows", CustomList.class);
+
+
+        File file = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\Shows.xml");
+
+        try {
+            //load the xml data into showsList
+            showsList = (CustomList<ShowModel>) xstream.fromXML(file);
+            System.out.println("Shows loaded from XML successfully.");
+            for (int i = 0; i < showsList.size(); i++) { //populating listview with loaded shows
+                showListView.getItems().add(showsList.get(i).toString());
+            }
+
+
+        } catch (Exception error) {
+            error.printStackTrace();
+            System.err.println("Error loading shows from XML: " + error.getMessage());
+        }
     }
 
-    public void switchToPerfomanceView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("perfomanceView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToCustomerView(ActionEvent event ) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("customerView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToBookingView(ActionEvent event ) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("booking.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
 }

@@ -130,7 +130,7 @@ public class SeatsController {
     }
 
     public void switchToBookingView(ActionEvent event ) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("booking.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainview.fxml"));
         Parent root = loader.load();
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

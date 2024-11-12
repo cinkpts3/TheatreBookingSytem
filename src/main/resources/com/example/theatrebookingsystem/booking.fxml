@@ -8,16 +8,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theatrebookingsystem.BookingController">
    <children>
       <AnchorPane layoutX="-2.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMainView" prefHeight="26.0" prefWidth="127.0" text="MAIN" />
-            <Button layoutX="127.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToShowView" prefHeight="26.0" prefWidth="120.0" text="SHOW" />
-            <Button layoutX="247.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToPerfomanceView" prefHeight="26.0" prefWidth="120.0" text="PERFOMANCE" />
-            <Button layoutX="367.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToBookingView" prefHeight="26.0" prefWidth="120.0" text="BOOKING" />
-            <Button layoutX="487.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToCustomerView" prefHeight="26.0" prefWidth="127.0" text="USER" />
             <ListView fx:id="customerListView" layoutY="111.0" prefHeight="242.0" prefWidth="614.0" />
             <Label layoutX="14.0" layoutY="39.0" text="BOOKING">
                <font>

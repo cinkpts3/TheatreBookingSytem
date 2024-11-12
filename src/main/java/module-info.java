@@ -6,6 +6,7 @@ module com.example.theatrebookingsystem {
     requires com.dlsc.formsfx;
 
     opens com.example.theatrebookingsystem to javafx.fxml;
+    opens theatrebookingsystem.model to xstream;
     exports com.example.theatrebookingsystem;
     requires xstream;
     opens utils to xstream;
