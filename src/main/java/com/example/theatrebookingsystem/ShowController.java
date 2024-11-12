@@ -19,17 +19,10 @@ import utils.CustomList;
 //import java.io.ObjectOutputStream;
 //import java.io.IOException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.time.LocalDate;
 
 public class ShowController {
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @FXML
     private ListView<String> showListView; // ListView to display the shows
@@ -55,22 +48,9 @@ public class ShowController {
     private Button deleteButton;
     // Custom list to store ShowModel objects
     private CustomList<ShowModel> showsList = new CustomList<>();
-
-
-    private MainController mainController;
-
-    private CustomList<String> titles = new CustomList<>();
-
     @FXML
     public void initialize() {
         load();
-    }
-
-
-
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
 
@@ -102,7 +82,7 @@ public class ShowController {
     }
 
 
-    public void deleteShow(ActionEvent e){
+    public void deleteShow(ActionEvent e) throws Exception{
         int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex != 1){
@@ -110,11 +90,10 @@ public class ShowController {
             showListView.getItems().remove(selectedIndex);
 
         }
-
+        save();
     }
 
-
-
+   //extracting titles for the performance controller
     public String getTitles() {
         CustomList<String> extractedTitles = new CustomList<>();
         for (int i = 0; i < showsList.size(); i++) {
@@ -123,47 +102,42 @@ public class ShowController {
         System.out.println("Titles extracted from ShowController: " + extractedTitles.size());
         return extractedTitles.toString();
     }
-    public void save() throws Exception {
-        var xstream = new XStream(new DomDriver());
-        xstream.alias("Show", ShowModel.class);
-        xstream.alias("Shows", CustomList.class);
+    private File file = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\xmlFiles\\Shows.xml");
 
-        FileWriter writer = new FileWriter("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\Shows.xml");
-        ObjectOutputStream os = xstream.createObjectOutputStream(writer);
+    public void save() throws Exception {
+        XStream  xstream = new XStream(new DomDriver());
+        xstream.allowTypeHierarchy(ShowModel.class);
+        xstream.allowTypeHierarchy(CustomList.class);
+        ObjectOutputStream os = xstream.createObjectOutputStream(new FileWriter(file));
         os.writeObject(showsList);
         System.out.println ("shows saved to xml:)");
         os.close();
-
 
     }
 
 
     public void load() {
-        Class<?>[] classes = new Class[] {ShowModel.class, CustomList.class};
-
+        //security
         XStream xstream = new XStream(new DomDriver());
         XStream.setupDefaultSecurity(xstream);
-        xstream.allowTypes(classes);
-
-        xstream.alias("Show", ShowModel.class);
-        xstream.alias("Shows", CustomList.class);
-
-
-        File file = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\Shows.xml");
-
+        //list of classes for  serialisation
+        xstream.allowTypeHierarchy(ShowModel.class);
+        xstream.allowTypeHierarchy(CustomList.class);
         try {
+
+            ObjectInputStream in = xstream.createObjectInputStream(new FileReader(file));
             //load the xml data into showsList
-            showsList = (CustomList<ShowModel>) xstream.fromXML(file);
-            System.out.println("Shows loaded from XML successfully.");
+            showsList = (CustomList<ShowModel>) in.readObject();
+            System.out.println("shows loaded.");//debug
             for (int i = 0; i < showsList.size(); i++) { //populating listview with loaded shows
                 showListView.getItems().add(showsList.get(i).toString());
             }
-
-
+            in.close();
         } catch (Exception error) {
             error.printStackTrace();
-            System.err.println("Error loading shows from XML: " + error.getMessage());
+            System.err.println("error loading from xml: " + error.getMessage()); //debug
         }
+
     }
 
 

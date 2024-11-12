@@ -50,7 +50,7 @@ public class CustomerModel {
     public String toString(){
         return "NAME: " + name +
                 "; EMAIL: " + email +
-                "; PHONE NUMBER: +350 " + phoneNumber;
+                "; PHONE NUMBER: +353 " + phoneNumber;
     }
 
 }

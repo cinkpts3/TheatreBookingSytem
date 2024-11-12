@@ -1,0 +1,40 @@
+<object-stream>
+  <utils.CustomList>
+    <head>
+      <data class="theatrebookingsystem.model.CustomerModel">
+        <name>Marie</name>
+        <email>kropl@fd.com</email>
+        <phoneNumber>12341234</phoneNumber>
+      </data>
+      <next>
+        <data class="theatrebookingsystem.model.CustomerModel">
+          <name>John Doe</name>
+          <email>johndoe@example.com</email>
+          <phoneNumber>98765432</phoneNumber>
+        </data>
+        <next>
+          <data class="theatrebookingsystem.model.CustomerModel">
+            <name>Anna Smith</name>
+            <email>annasmith@example.com</email>
+            <phoneNumber>87654321</phoneNumber>
+          </data>
+          <next>
+            <data class="theatrebookingsystem.model.CustomerModel">
+              <name>Peter Parker</name>
+              <email>spiderman@example.com</email>
+              <phoneNumber>65432187</phoneNumber>
+            </data>
+            <next>
+              <data class="theatrebookingsystem.model.CustomerModel">
+                <name>Lisa Johnson</name>
+                <email>lisa.j@example.com</email>
+                <phoneNumber>12398765</phoneNumber>
+              </data>
+              <next/>
+            </next>
+          </next>
+        </next>
+      </next>
+    </head>
+  </utils.CustomList>
+</object-stream>

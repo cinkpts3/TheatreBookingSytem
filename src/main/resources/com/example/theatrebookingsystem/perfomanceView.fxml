@@ -15,7 +15,7 @@
             <Font name="Berlin Sans FB Demi Bold" size="23.0" />
          </font>
       </Label>
-      <ListView layoutY="122.0" prefHeight="254.0" prefWidth="614.0" fx:id="perfomanceListView"  />
+      <ListView fx:id="perfomanceListView" layoutY="122.0" prefHeight="227.0" prefWidth="614.0" />
       <Label layoutX="14.0" layoutY="64.0" text="add new perfomance">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
@@ -26,5 +26,6 @@
       <Button fx:id="addPerfomance" layoutX="575.0" layoutY="86.0" mnemonicParsing="false" onAction="#addPerfomanceList" text="+" />
       <ChoiceBox fx:id="eveningTimeSlot" layoutX="352.0" layoutY="86.0" prefHeight="26.0" prefWidth="78.0" />
       <ChoiceBox fx:id="matineeTimeSlot" layoutX="448.0" layoutY="86.0" prefHeight="26.0" prefWidth="78.0" />
+      <Button layoutX="536.0" layoutY="360.0" mnemonicParsing="false" onAction="#deletePerformance" text="remove" />
    </children>
 </AnchorPane>

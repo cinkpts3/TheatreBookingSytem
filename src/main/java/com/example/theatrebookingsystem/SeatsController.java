@@ -1,5 +1,7 @@
 package com.example.theatrebookingsystem;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import theatrebookingsystem.model.*;
 import utils.CustomList;
 
-import java.io.IOException;
+import java.io.*;
 
 public class SeatsController {
     private Stage stage;
@@ -24,11 +27,15 @@ public class SeatsController {
     private GridPane circleGrid;
     @FXML
     private GridPane stallsGrid;
+    @FXML
+    private ChoiceBox<String> performanceSlot;
 
+    private PerfomanceModel selectedPerformance;
 
+    private Seat seat;
 
     public CustomList<Seat> seats = new CustomList<>();
-
+    private CustomList<Seat> selectedSeats = new CustomList<>();
     @FXML
     public Button switchToBooking;
 
@@ -38,6 +45,7 @@ public class SeatsController {
         initBalconySeats();
         initCircleSeats();
         initStallSeats();
+        loadPerfomance();
     }
 
 
@@ -49,7 +57,7 @@ public class SeatsController {
             int seatNumberStart = 17 - row * column;
             for (int col = 0; col < column; col++) { //nested loop
                 String seatNumber = "B" + (seatNumberStart + col);
-                Seat seat = new Seat(seatNumber);  //creates new seat object
+                Seat seat = new Seat(seatNumber, selectedPerformance);  //creates new seat object
                 seats.add(seat); //adds objects to the custom list
 
                 Button seatButton = new Button(seatNumber);
@@ -70,7 +78,7 @@ public class SeatsController {
             int seatNumberStart = 21 - row * column;
             for (int col = 0; col < column; col++) {
                 String seatNumber = "C" + (seatNumberStart + col);
-                Seat seat = new Seat(seatNumber);
+                Seat seat = new Seat(seatNumber, selectedPerformance);
                 seats.add(seat);
 
                 Button seatButton = new Button(seatNumber);
@@ -89,7 +97,7 @@ public class SeatsController {
             int seatNumberStart = 31 - row * column;
             for (int col = 0; col < column; col++) {
                 String seatNumber = "S" + ( seatNumberStart + col);
-                Seat seat = new Seat(seatNumber);
+                Seat seat = new Seat(seatNumber, selectedPerformance);
                 seats.add(seat);
 
                 Button seatButton = new Button(seatNumber);
@@ -103,11 +111,11 @@ public class SeatsController {
 
 
     private void toggleSeatSelection(Seat seat, Button seatButton) {
-        if (!seat.isBooked()) {
-            seat.setBooked(true);
+        if (!seat.isSelected()) { //if user press on button
+            seat.setSelected(true);
             seatButton.setStyle("-fx-background-color: red;");
         } else {
-            seat.setBooked(false);
+            seat.setSelected(false);
             if (seat.getSeatNumber().startsWith("B")) {
                 seatButton.setStyle("-fx-background-color: LIGHTGREEN;");
             } else if (seat.getSeatNumber().startsWith("C")) {
@@ -118,20 +126,38 @@ public class SeatsController {
         }
     }
 
-    public CustomList<Seat> getSelectedSeats() {
-        CustomList<Seat> selectedSeats = new CustomList<>();
-        for (int i = 0; i < seats.size(); i++) {
-            Seat seat = seats.get(i);
-            if (seat.isBooked()) {
-                selectedSeats.add(seat);
+
+
+    private CustomList<PerfomanceModel> performanceList = new CustomList<>();
+    public PerfomanceModel findPerformance(int perfomanceid) {
+        for (int i = 0; i < performanceList.size(); i++) {
+            PerfomanceModel perf = performanceList.get(i);
+            if (perf.getId() == perfomanceid ) { // Use the correct getter here
+                return perf;
             }
         }
-        return selectedSeats;
+        throw new IllegalArgumentException("performance wasnt found");
+    }
+
+    public void addSeats(ActionEvent event) throws Exception{
+        String perfomance = performanceSlot.getValue();
+        PerfomanceModel perf = findPerformance(perfoman);
+        for (int i = 0; i < seats.size(); i++) {
+            Seat seat = seats.get(i);
+            if (seat.isSelected()) {
+                Seat newSeat = new Seat(seat.getSeatNumber(), perf);
+                selectedSeats.add(newSeat);
+            }
+        }
+        saveToPerfomanceXML();
+        System.out.println("seats are added to the xml file");
     }
 
     public void switchToBookingView(ActionEvent event ) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainview.fxml"));
         Parent root = loader.load();
+
+
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -139,5 +165,46 @@ public class SeatsController {
         stage.show();
 
     }
+
+    private File fileSeat = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\xmlFiles\\Seats.xml");
+    public void saveToPerfomanceXML() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        xstream.allowTypeHierarchy(ShowModel.class);
+        xstream.allowTypeHierarchy(CustomList.class);
+        ObjectOutputStream os = xstream.createObjectOutputStream(new FileWriter(fileSeat));
+        os.writeObject(selectedSeats);
+        System.out.println ("performance saved to xml:)");
+        os.close();
+
+    }
+
+
+    //load and save
+    private void loadPerfomance(){
+        File file = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\xmlFiles\\Perfomances.xml");
+
+        XStream xstream = new XStream(new DomDriver());
+        XStream.setupDefaultSecurity(xstream);
+        //allow type hierarchy instead of list of classes for serialisation
+        xstream.allowTypeHierarchy(PerfomanceModel.class);
+        xstream.allowTypeHierarchy(CustomList.class);
+        try {
+            ObjectInputStream in = xstream.createObjectInputStream(new FileReader(file));
+            CustomList<PerfomanceModel> perfomanceList = (CustomList<PerfomanceModel>) in.readObject(); //load
+            if (perfomanceList != null) {
+                System.out.println("performances loaded!");
+                performanceSlot.getItems().clear(); //clear existing titles (in case of removing show)
+                for (int i = 0; i < perfomanceList.size(); i++) { //populate title slot with titles
+                    PerfomanceModel perfomance = perfomanceList.get(i);
+                    performanceSlot.getItems().add(perfomanceList.get(i).toString());
+
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("error loading xml: " + e.getMessage());
+        }
+    }
+
 
 }

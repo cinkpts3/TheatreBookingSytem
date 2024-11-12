@@ -20,11 +20,10 @@
             </Label>
             <Button fx:id="addBooking" layoutX="575.0" layoutY="76.0" mnemonicParsing="false" onAction="#addBookingList" text="+" />
             <Button fx:id="deleteBooking" layoutX="536.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteBookingList" text="REMOVE" />
-            <ChoiceBox layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
-            <ChoiceBox layoutX="119.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
-            <Button fx:id="seatPage" layoutX="334.0" layoutY="75.0" mnemonicParsing="false" onAction="#switchToSeatsView" prefHeight="26.0" prefWidth="105.0" text="FIND SEATS" />
-            <Text fill="#636161" layoutX="465.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seats chosen" wrappingWidth="94.13677978515625" />
-            <ChoiceBox layoutX="224.0" layoutY="75.0" prefHeight="26.0" prefWidth="82.0" />
+            <ChoiceBox fx:id="customerChoice" layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
+            <ChoiceBox fx:id="perfomanceChoice" layoutX="119.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
+            <Button fx:id="seatPage" layoutX="223.0" layoutY="75.0" mnemonicParsing="false" onAction="#switchToSeatsView" prefHeight="26.0" prefWidth="105.0" text="FIND SEATS" />
+            <Text fill="#636161" layoutX="348.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seats chosen" wrappingWidth="94.13677978515625" />
          </children>
       </AnchorPane>
    </children>

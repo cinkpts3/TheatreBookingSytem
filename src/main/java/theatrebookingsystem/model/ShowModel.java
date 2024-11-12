@@ -77,7 +77,7 @@ public class ShowModel {
 
     @Override
     public String toString(){
-        return "TITLE" + title +
+        return "TITLE: " + title +
                 "; RUNNING TIME: " + runningTime +
                 "; START DATE: " + startDate +
                 "; END DATE: " + endDate +

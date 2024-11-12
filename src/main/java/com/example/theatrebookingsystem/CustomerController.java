@@ -1,5 +1,7 @@
 package com.example.theatrebookingsystem;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,13 +17,10 @@ import theatrebookingsystem.model.CustomerModel;
 import theatrebookingsystem.model.ShowModel;
 import utils.CustomList;
 
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 
 public class CustomerController {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @FXML
     private TextField nameField;
@@ -38,9 +37,15 @@ public class CustomerController {
     @FXML
     private ListView<String> customerListView;
     private CustomList<CustomerModel> customerList = new CustomList<>();
+    @FXML
+    public void initialize(){
+        if (customerList != null) {
+            loadCustomers();
+        }
+    }
 
 
-    public void addCustomerList(ActionEvent event){
+    public void addCustomerList(ActionEvent event) throws Exception {
         String name = nameField.getText();
         String email = emailField.getText();
         String phone = phoneNumberField.getText();
@@ -50,61 +55,57 @@ public class CustomerController {
         customerList.add(newCustomer);
         customerListView.getItems().add(newCustomer.toString());
 
+        saveCustomers();
         nameField.clear();
         emailField.clear();
         phoneNumberField.clear();
 
 
     }
-
-
     public void removeCustomer(ActionEvent event){
         int selectedIndex = customerListView.getSelectionModel().getSelectedIndex();
-
-
         if (selectedIndex != 1){
             customerList.remove(selectedIndex);
             customerListView.getItems().remove(selectedIndex);
         }
     }
 
+    private File file = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\xmlFiles\\Customers.xml");
+
+    public void saveCustomers() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        xstream.allowTypeHierarchy(CustomerModel.class);
+        xstream.allowTypeHierarchy(CustomList.class);
+        ObjectOutputStream os = xstream.createObjectOutputStream(new FileWriter(file));
+        os.writeObject(customerList);
+        System.out.println ("customers saved to xml:)");
+        os.close();
+
+    }
 
 
-    public void switchToMainView(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("mainview.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void loadCustomers() {
+        //security
+        XStream xstream = new XStream(new DomDriver());
+        XStream.setupDefaultSecurity(xstream);
+        //list of classes for  serialisation
+        xstream.allowTypeHierarchy(CustomerModel.class);
+        xstream.allowTypeHierarchy(CustomList.class);
+
+        try {
+            ObjectInputStream in = xstream.createObjectInputStream(new FileReader(file));
+            //load the xml data into showsList
+            customerList = (CustomList<CustomerModel>) in.readObject();
+            System.out.println("customers are loaded.");//debug
+            for (int i = 0; i < customerList.size(); i++) { //populating listview with loaded shows
+                customerListView.getItems().add(customerList.get(i).toString());
+            }
+            in.close();
+        } catch (Exception error) {
+            error.printStackTrace();
+            System.err.println("error loading from xml: " + error.getMessage()); //debug
+        }
+
     }
 
-    public void switchToShowView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("showView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void switchToPerfomanceView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("perfomanceView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchToCustomerView(ActionEvent event ) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("customerView.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void switchToBookingView(ActionEvent event ) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("booking.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 }

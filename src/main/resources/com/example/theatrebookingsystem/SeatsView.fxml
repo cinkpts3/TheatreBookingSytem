@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -26,7 +27,8 @@
             <GridPane fx:id="stallsGrid" alignment="CENTER" />
             <HBox alignment="CENTER" spacing="10">
                <children>
-                  <Button onAction="#switchToBookingView" text="Confirm Selection" />
+                  <Button onAction="#addSeats" text="Confirm Selection" />
+                  <Button mnemonicParsing="false" onAction="#switchToBookingView" text="Back to the booking" />
                </children>
             </HBox>
          </children>
@@ -62,5 +64,7 @@
          </font>
       </Text>
       <Text layoutX="517.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STALLS" />
+      <ChoiceBox fx:id="performanceSlot" layoutX="491.0" layoutY="21.0" prefHeight="26.0" prefWidth="90.0" />
+      <Text layoutX="481.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose performance" />
    </children>
 </AnchorPane>

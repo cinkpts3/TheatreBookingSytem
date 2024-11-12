@@ -1,0 +1,48 @@
+<object-stream> <!--https://chatgpt.com/share/6733a7ea-a2b0-800c-8260-f9efe903eadc-->
+  <utils.CustomList>
+    <head>
+      <data class="theatrebookingsystem.model.ShowModel">
+        <title>The Phantom</title>
+        <runningTime>150.0</runningTime>
+        <startDate>2024-11-05</startDate>
+        <endDate>2024-12-05</endDate>
+        <stallsTicketPrice>150.0</stallsTicketPrice>
+        <circleTicketPrice>275.0</circleTicketPrice>
+        <balconyTicketPrice>400.0</balconyTicketPrice>
+      </data>
+      <next>
+        <data class="theatrebookingsystem.model.ShowModel">
+          <title>Romeo and Juliet</title>
+          <runningTime>130.0</runningTime>
+          <startDate>2024-11-07</startDate>
+          <endDate>2024-11-25</endDate>
+          <stallsTicketPrice>130.0</stallsTicketPrice>
+          <circleTicketPrice>220.0</circleTicketPrice>
+          <balconyTicketPrice>320.0</balconyTicketPrice>
+        </data>
+        <next>
+          <data class="theatrebookingsystem.model.ShowModel">
+            <title>The Magic Flute</title>
+            <runningTime>140.0</runningTime>
+            <startDate>2024-11-10</startDate>
+            <endDate>2024-12-10</endDate>
+            <stallsTicketPrice>145.0</stallsTicketPrice>
+            <circleTicketPrice>250.0</circleTicketPrice>
+            <balconyTicketPrice>350.0</balconyTicketPrice>
+          </data>
+          <next>
+            <data class="theatrebookingsystem.model.ShowModel">
+              <title>Hamlet</title>
+              <runningTime>160.0</runningTime>
+              <startDate>2024-11-12</startDate>
+              <endDate>2024-12-12</endDate>
+              <stallsTicketPrice>160.0</stallsTicketPrice>
+              <circleTicketPrice>270.0</circleTicketPrice>
+              <balconyTicketPrice>380.0</balconyTicketPrice>
+            </data>
+          </next>
+        </next>
+      </next>
+    </head>
+  </utils.CustomList>
+</object-stream>

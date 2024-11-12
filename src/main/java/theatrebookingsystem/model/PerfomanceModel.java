@@ -1,6 +1,7 @@
 package theatrebookingsystem.model;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 public class PerfomanceModel {
 
@@ -10,8 +11,11 @@ public class PerfomanceModel {
         private String eveningTime;
 
         private ShowModel show;
-        public PerfomanceModel(LocalDate date, String matineeTime,String eveningTime, ShowModel show){ //, ShowModel show
-           this.show = show;
+
+        private int id;
+        public PerfomanceModel(int id, LocalDate date, String matineeTime,String eveningTime, ShowModel show){ //, ShowModel show
+           this.id = id;
+            this.show = show;
             setDate(date);
             this.matineeTime = matineeTime;
             this.eveningTime = eveningTime;
@@ -33,20 +37,25 @@ public class PerfomanceModel {
         }
 
         public String getMatineeTime(){
-           return getMatineeTime();
+           return matineeTime;
         }
         public String getEveningTime(){
             return eveningTime;
         }
 
+
+
         public String toString(){
-            return "Title: " + show.getTitle() +
-                    "; date: " + date +
-                    "; matinee time: " + matineeTime +
-                    "; evening time: " + eveningTime;
+            return "TITLE: " + show.getTitle() +
+                    "; DATE: " + date +
+                    "; MATINEE TIME: " + matineeTime +
+                    "; EVENING TIME: " + eveningTime;
         }
 
 
+    public int getId() {
+            return id ;
+    }
 
 
 }
