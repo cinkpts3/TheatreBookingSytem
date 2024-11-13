@@ -67,25 +67,27 @@ public class PerfomanceController {
         throw new IllegalArgumentException("show wasnt found");
     }
 
-    public int generateRandomId() {
+    public String  generateRandomId() {
         Random random = new Random();
         int id;
         boolean idExists;
+        String strid;
 
         do {
              id = random.nextInt(10000000) ;  // Generates a random ID between 1 and 1,000,000
             idExists = false;
 
+            strid = Integer.toString(id);
             // Check if the ID already exists
             for (int i = 0; i < perfomnceList.size(); i++) {
-                if (perfomnceList.get(i).getId() == id) {
+                if (perfomnceList.get(i).getId().equals(strid)) {
                     idExists = true;
                     break;
                 }
             }
         } while (idExists); // Repeat if the ID is already taken
 
-        return id;
+        return strid;
     }
 
 
@@ -139,7 +141,7 @@ public class PerfomanceController {
             }
         }
 
-        int id = generateRandomId();
+        String id = generateRandomId();
 
         PerfomanceModel newPerfomance = new PerfomanceModel(id, date, matineeTime, eveningTime, show );
 
@@ -211,7 +213,7 @@ public class PerfomanceController {
             ObjectInputStream in = xstream.createObjectInputStream(new FileReader(file));
             CustomList<ShowModel> showsList = (CustomList<ShowModel>) in.readObject(); //load
             if(showsList != null ){
-                System.out.println("shows loaded!");
+                System.out.println("shows are loaded!");
                 titleSlot.getItems().clear(); //clear existing titles (in case of removing show)
                 for (int i = 0; i < showsList.size(); i++) { //populate title slot with titles
                     ShowModel show = showsList.get(i);

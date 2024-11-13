@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import theatrebookingsystem.model.*;
@@ -37,8 +39,9 @@ public class SeatsController {
     public CustomList<Seat> seats = new CustomList<>();
     private CustomList<Seat> selectedSeats = new CustomList<>();
     @FXML
-    public Button switchToBooking;
+    private Button switchToBooking;
 
+    private BookingController bookingController;
 
     @FXML
     public void initialize(){
@@ -129,10 +132,12 @@ public class SeatsController {
 
 
     private CustomList<PerfomanceModel> performanceList = new CustomList<>();
-    public PerfomanceModel findPerformance(int perfomanceid) {
+
+    public PerfomanceModel findPerformance(String performance) {
         for (int i = 0; i < performanceList.size(); i++) {
             PerfomanceModel perf = performanceList.get(i);
-            if (perf.getId() == perfomanceid ) { // Use the correct getter here
+            System.out.println("Checking: " + perf.toString());
+            if (perf.toString().equalsIgnoreCase(performance)) {
                 return perf;
             }
         }
@@ -140,8 +145,8 @@ public class SeatsController {
     }
 
     public void addSeats(ActionEvent event) throws Exception{
-        String perfomance = performanceSlot.getValue();
-        PerfomanceModel perf = findPerformance(perfoman);
+        String performance = performanceSlot.getValue();
+        PerfomanceModel perf = findPerformance(performance);
         for (int i = 0; i < seats.size(); i++) {
             Seat seat = seats.get(i);
             if (seat.isSelected()) {
@@ -149,14 +154,31 @@ public class SeatsController {
                 selectedSeats.add(newSeat);
             }
         }
-        saveToPerfomanceXML();
+        saveToSeatXML();
+
         System.out.println("seats are added to the xml file");
+
+        if (bookingController != null) {
+            bookingController.setSelectedSeats(selectedSeats);
+        }
+        // Finalize seat selection
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();  // Closes the window after selection
+    }
+    private MainController mainController;  // Reference to MainController
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
+
     public void switchToBookingView(ActionEvent event ) throws IOException {
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainview.fxml"));
         Parent root = loader.load();
-
+        bookingController = loader.getController();  // Set bookingController here
+        bookingController.setSelectedSeats(selectedSeats);
+        mainController.switchToBookingTab();
 
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -167,7 +189,7 @@ public class SeatsController {
     }
 
     private File fileSeat = new File("C:\\Users\\Admin\\Desktop\\theateBookingSystem\\theatreBookingSystem\\src\\main\\resources\\com\\example\\theatrebookingsystem\\xmlFiles\\Seats.xml");
-    public void saveToPerfomanceXML() throws Exception {
+    public void saveToSeatXML() throws Exception {
         XStream xstream = new XStream(new DomDriver());
         xstream.allowTypeHierarchy(ShowModel.class);
         xstream.allowTypeHierarchy(CustomList.class);
@@ -190,13 +212,13 @@ public class SeatsController {
         xstream.allowTypeHierarchy(CustomList.class);
         try {
             ObjectInputStream in = xstream.createObjectInputStream(new FileReader(file));
-            CustomList<PerfomanceModel> perfomanceList = (CustomList<PerfomanceModel>) in.readObject(); //load
-            if (perfomanceList != null) {
-                System.out.println("performances loaded!");
+            performanceList = (CustomList<PerfomanceModel>) in.readObject(); //load
+            if (performanceList != null) {
+                System.out.println("performances are loaded!");
                 performanceSlot.getItems().clear(); //clear existing titles (in case of removing show)
-                for (int i = 0; i < perfomanceList.size(); i++) { //populate title slot with titles
-                    PerfomanceModel perfomance = perfomanceList.get(i);
-                    performanceSlot.getItems().add(perfomanceList.get(i).toString());
+                for (int i = 0; i < performanceList.size(); i++) { //populate title slot with titles
+                    PerfomanceModel performance = performanceList.get(i);
+                    performanceSlot.getItems().add(performance.toString());
 
                 }
             }
@@ -204,6 +226,11 @@ public class SeatsController {
             e.printStackTrace();
             System.err.println("error loading xml: " + e.getMessage());
         }
+
+    }
+
+    public void setBookingController(BookingController bookingController) {
+        this.bookingController = bookingController;
     }
 
 

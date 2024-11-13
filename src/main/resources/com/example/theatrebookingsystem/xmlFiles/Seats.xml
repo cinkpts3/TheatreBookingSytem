@@ -1,0 +1,34 @@
+<object-stream>
+  <utils.CustomList>
+    <head>
+      <data class="theatrebookingsystem.model.Seat">
+        <seatNumber>C25</seatNumber>
+        <isBooked>false</isBooked>
+        <isSelected>false</isSelected>
+        <perfomance>
+          <date>2024-11-17</date>
+          <matineeTime>ONLY EVENING</matineeTime>
+          <eveningTime>17:00</eveningTime>
+          <show>
+            <title>Hamlet</title>
+            <runningTime>160.0</runningTime>
+            <startDate>2024-11-12</startDate>
+            <endDate>2024-12-12</endDate>
+            <stallsTicketPrice>160.0</stallsTicketPrice>
+            <circleTicketPrice>270.0</circleTicketPrice>
+            <balconyTicketPrice>380.0</balconyTicketPrice>
+          </show>
+          <id>3</id>
+        </perfomance>
+      </data>
+      <next>
+        <data class="theatrebookingsystem.model.Seat">
+          <seatNumber>C4</seatNumber>
+          <isBooked>false</isBooked>
+          <isSelected>false</isSelected>
+          <perfomance reference="../../../data/perfomance"/>
+        </data>
+      </next>
+    </head>
+  </utils.CustomList>
+</object-stream>

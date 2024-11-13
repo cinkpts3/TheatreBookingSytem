@@ -16,7 +16,6 @@ public class MainApplication extends Application {
         Parent root = mainLoader.load();
         MainController mainController = mainLoader.getController();
 
-        // Ensure ShowController and PerfomanceController are linked here
         FXMLLoader showLoader = new FXMLLoader(getClass().getResource("showView.fxml"));
         showLoader.load();
         ShowController showController = showLoader.getController();
@@ -25,6 +24,9 @@ public class MainApplication extends Application {
         perfomanceLoader.load();
         PerfomanceController perfomanceController = perfomanceLoader.getController();
 
+        FXMLLoader seatsLoader = new FXMLLoader(getClass().getResource("/com/example/theatrebookingsystem/SeatsView.fxml"));
+        Parent seatsRoot = seatsLoader.load();
+        SeatsController seatsController = seatsLoader.getController();
         mainController.setShowController(showController);
         mainController.setPerfomanceController(perfomanceController);
 

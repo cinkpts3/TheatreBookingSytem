@@ -8,14 +8,14 @@ public class BookingModel {
     private PerfomanceModel perfomance;
     private CustomerModel customer;
     private int bookingId;
-    private CustomList<Ticket> tickets;
+    private CustomList<Seat> seats;
 
     private float totalprice;
-    public BookingModel(PerfomanceModel perfomance, CustomerModel customer,  CustomList<Ticket> tickets){
+    public BookingModel(PerfomanceModel perfomance, CustomerModel customer, CustomList<Seat> seats) {//,  CustomList<Seat> seats){
 
         this.customer = customer;
         this.perfomance = perfomance;
-        this.tickets = tickets;
+        this.seats = seats;
 
     }
 
@@ -34,12 +34,12 @@ public class BookingModel {
         return perfomance;
     }
 
-    public CustomList<Ticket> getTickets() {
-        return tickets;
+    public CustomList<Seat> getSeats() {
+        return seats;
     }
     public String toString(){
         return "PERFOMANCE: " + perfomance +
                 "; CUSTOMER: " + customer +
-                "; TICKETS: " + tickets;
+                "; TICKETS: " + seats;
     }
 }

@@ -12,8 +12,8 @@ public class PerfomanceModel {
 
         private ShowModel show;
 
-        private int id;
-        public PerfomanceModel(int id, LocalDate date, String matineeTime,String eveningTime, ShowModel show){ //, ShowModel show
+        private String id;
+        public PerfomanceModel(String id, LocalDate date, String matineeTime,String eveningTime, ShowModel show){ //, ShowModel show
            this.id = id;
             this.show = show;
             setDate(date);
@@ -49,11 +49,12 @@ public class PerfomanceModel {
             return "TITLE: " + show.getTitle() +
                     "; DATE: " + date +
                     "; MATINEE TIME: " + matineeTime +
-                    "; EVENING TIME: " + eveningTime;
+                    "; EVENING TIME: " + eveningTime +
+                    "; ID: " + id;
         }
 
 
-    public int getId() {
+    public String  getId() {
             return id ;
     }
 

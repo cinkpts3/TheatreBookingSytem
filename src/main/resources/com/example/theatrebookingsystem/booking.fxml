@@ -12,7 +12,7 @@
    <children>
       <AnchorPane layoutX="-2.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <ListView fx:id="customerListView" layoutY="111.0" prefHeight="242.0" prefWidth="614.0" />
+            <ListView fx:id="bookingListView" layoutY="111.0" prefHeight="242.0" prefWidth="614.0" />
             <Label layoutX="14.0" layoutY="39.0" text="BOOKING">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="23.0" />
@@ -21,9 +21,9 @@
             <Button fx:id="addBooking" layoutX="575.0" layoutY="76.0" mnemonicParsing="false" onAction="#addBookingList" text="+" />
             <Button fx:id="deleteBooking" layoutX="536.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteBookingList" text="REMOVE" />
             <ChoiceBox fx:id="customerChoice" layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
-            <ChoiceBox fx:id="perfomanceChoice" layoutX="119.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
+            <ChoiceBox fx:id="performanceChoice" layoutX="119.0" layoutY="76.0" prefHeight="26.0" prefWidth="82.0" />
             <Button fx:id="seatPage" layoutX="223.0" layoutY="75.0" mnemonicParsing="false" onAction="#switchToSeatsView" prefHeight="26.0" prefWidth="105.0" text="FIND SEATS" />
-            <Text fill="#636161" layoutX="348.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seats chosen" wrappingWidth="94.13677978515625" />
+            <Text fx:id="seatsChosenText" fill="#636161" layoutX="348.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seats chosen" wrappingWidth="94.13677978515625" />
          </children>
       </AnchorPane>
    </children>

@@ -5,7 +5,7 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.theatrebookingsystem.MainController">
    <TabPane fx:id="tabPane" prefWidth="600.0" prefHeight="500.0">
-   <Tab text="Main">
+   <Tab  text="Main">
          <AnchorPane>
          </AnchorPane>
       </Tab>
@@ -24,7 +24,7 @@
             <fx:include source="customerView.fxml"/>
          </AnchorPane>
       </Tab>
-      <Tab text="Booking">
+      <Tab fx:id="bookingTab" text="Booking">
          <AnchorPane>
             <fx:include source="booking.fxml"/>
          </AnchorPane>

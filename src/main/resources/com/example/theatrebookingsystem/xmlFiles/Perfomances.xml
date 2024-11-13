@@ -50,9 +50,9 @@
           </data>
           <next>
             <data class="theatrebookingsystem.model.PerfomanceModel">
-              <date>2024-11-12</date>
+              <date>2024-11-21</date>
               <matineeTime>ONLY EVENING</matineeTime>
-              <eveningTime>21:00</eveningTime>
+              <eveningTime>19:00</eveningTime>
               <show>
                 <title>Romeo and Juliet</title>
                 <runningTime>130.0</runningTime>
@@ -62,23 +62,23 @@
                 <circleTicketPrice>220.0</circleTicketPrice>
                 <balconyTicketPrice>320.0</balconyTicketPrice>
               </show>
-              <id>0</id>
+              <id>5</id>
             </data>
             <next>
               <data class="theatrebookingsystem.model.PerfomanceModel">
-                <date>2024-11-21</date>
+                <date>2024-11-13</date>
                 <matineeTime>ONLY EVENING</matineeTime>
-                <eveningTime>20:00</eveningTime>
+                <eveningTime>21:00</eveningTime>
                 <show>
-                  <title>The Magic Flute</title>
-                  <runningTime>140.0</runningTime>
-                  <startDate>2024-11-10</startDate>
-                  <endDate>2024-12-10</endDate>
-                  <stallsTicketPrice>145.0</stallsTicketPrice>
-                  <circleTicketPrice>250.0</circleTicketPrice>
-                  <balconyTicketPrice>350.0</balconyTicketPrice>
+                  <title>Romeo and Juliet</title>
+                  <runningTime>130.0</runningTime>
+                  <startDate>2024-11-07</startDate>
+                  <endDate>2024-11-25</endDate>
+                  <stallsTicketPrice>130.0</stallsTicketPrice>
+                  <circleTicketPrice>220.0</circleTicketPrice>
+                  <balconyTicketPrice>320.0</balconyTicketPrice>
                 </show>
-                <id>855997</id>
+                <id>2917663</id>
               </data>
             </next>
           </next>
